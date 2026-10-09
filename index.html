@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>★</title>
 <style>
-  html,body{margin:0}
-  body{position:relative;overflow-x:hidden;background:#0a0018;
+  html,body{margin:0;padding:0;width:100%;max-width:100%;overflow-x:hidden}
+  body{position:relative;background:#0a0018;
     font-family:"Comic Sans MS","Comic Sans",cursive;text-align:center}
   #bg{position:fixed;left:0;top:0;width:300%;height:100%;pointer-events:none;
     background:url("ozadje.png") repeat;animation:bg 9s linear infinite}
@@ -33,6 +33,10 @@
   #bon{position:relative;z-index:3;display:block;width:min(70vw,360px);height:auto;margin:10px auto 0;
     animation:wob .6s ease-in-out infinite alternate}
   .sp{position:absolute;z-index:1;pointer-events:none}
+  .side{position:fixed;width:100vh;height:31px;pointer-events:none;z-index:2;
+    background:url("gifs/srcki.gif") repeat-x;transform:rotate(90deg)}
+  .side.left{top:calc(50vh - 15.5px);left:calc(15.5px - 50vh)}
+  .side.right{top:calc(50vh - 15.5px);left:calc(100vw - 15.5px - 50vh)}
   .a0{animation:spin 3s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
   .a1{animation:bounce .7s ease-in-out infinite alternate}@keyframes bounce{to{transform:translateY(-28px)}}
   .a2{animation:wig .4s ease-in-out infinite alternate}@keyframes wig{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
@@ -51,6 +55,8 @@
 <body>
 
 <div id="bg"></div>
+<div class="side left"></div>
+<div class="side right"></div>
 
 <div id="gate">
   <img id="cat" src="images/cat.png" alt="cat" draggable="false">
@@ -77,7 +83,7 @@ var SONGS = ["song.mp3"];
 // Photos: number of placeholder pics, OR replace entries with real paths like "img/party1.jpg".
 var PHOTOS = ["images/IMG_1169.jpg","images/IMG_1433.jpg","images/IMG_1779.jpg","images/IMG_2064.jpg","images/IMG_2065.jpg","images/IMG_2101.jpg","images/IMG_2241.jpg","images/IMG_2336.jpg","images/IMG_2384.jpg","images/IMG_2437.jpg","images/IMG_2616.jpg","images/IMG_2651.jpg","images/IMG_2724.jpg","images/IMG_2739.jpg","images/IMG_2752.jpg","images/IMG_2787.jpg","images/IMG_7008.JPG","images/unnamed.jpg","images/unnamed%20(1).jpg","images/unnamed%20(2).jpg"];
 // Local gifs sprinkled around the page.
-var GIFS = ["gifs/2DA64QPWVJBJT5TNSGUNJELCVQWN7OLM.gif","gifs/2RTHYOCOCMHBJPGMAYHG5CLVBKFSS46Y.gif","gifs/5BSPYIBL4HJOPBQRIVX5DP3WMFW4NVTG.gif","gifs/CFOLQCEES2HPJNSQKKZJC6DAWQFYU6R2.gif","gifs/D35D4VRCY5ADRH234MUXRQHCQ3E3VX55.gif","gifs/D5JQBEUUZQZJSQKUKOVXQISODMQD4SPX.gif","gifs/E7YYFZN6SM36LSUHYZZ5NJ2ITLUUUH72.gif","gifs/ERPFAGRKB6JXVPLAR6Y62CTOXC4HTUOI.gif","gifs/GAIF6EHCF2J7N7VUUQNOKZCCGF3ADHWB.gif","gifs/JJOKFUMX2ZGCAWWUR5VIIP4CQHPIVCTY.gif","gifs/RNHGVNLVCM4HGX5VJBX4CXCPDGBHZY6X.gif","gifs/VRTIQU3SDL4XMVJAR23ESZC27D6ILOYU.gif","gifs/W3X7KQPS3IZY6OAAKPDLO37ILKGFTC24.gif","gifs/frends.gif","gifs/intertejnise.gif","gifs/kiss.gif","gifs/kvin.gif","gifs/kvin2.gif","gifs/newsflash.gif","gifs/secret%20to%20success.gif","gifs/srcki.gif","gifs/women%20sharing%20ideas.gif","gifs/xx.gif"];
+var GIFS = ["gifs/2DA64QPWVJBJT5TNSGUNJELCVQWN7OLM.gif","gifs/2RTHYOCOCMHBJPGMAYHG5CLVBKFSS46Y.gif","gifs/5BSPYIBL4HJOPBQRIVX5DP3WMFW4NVTG.gif","gifs/CFOLQCEES2HPJNSQKKZJC6DAWQFYU6R2.gif","gifs/D5JQBEUUZQZJSQKUKOVXQISODMQD4SPX.gif","gifs/E7YYFZN6SM36LSUHYZZ5NJ2ITLUUUH72.gif","gifs/ERPFAGRKB6JXVPLAR6Y62CTOXC4HTUOI.gif","gifs/GAIF6EHCF2J7N7VUUQNOKZCCGF3ADHWB.gif","gifs/RNHGVNLVCM4HGX5VJBX4CXCPDGBHZY6X.gif","gifs/VRTIQU3SDL4XMVJAR23ESZC27D6ILOYU.gif","gifs/W3X7KQPS3IZY6OAAKPDLO37ILKGFTC24.gif","gifs/frends.gif","gifs/intertejnise.gif","gifs/kiss.gif","gifs/kvin.gif","gifs/kvin2.gif","gifs/newsflash.gif","gifs/secret%20to%20success.gif","gifs/srcki.gif","gifs/women%20sharing%20ideas.gif","gifs/xx.gif"];
 /* ==================== */
 
 var R=Math.random,rnd=function(a,b){return a+R()*(b-a)},pick=function(a){return a[Math.floor(R()*a.length)]};
