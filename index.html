@@ -9,7 +9,7 @@
   body{position:relative;overflow-x:hidden;background:#0a0018;
     font-family:"Comic Sans MS","Comic Sans",cursive;text-align:center}
   #bg{position:fixed;left:0;top:0;width:300%;height:100%;pointer-events:none;
-    background-size:100% 100%;animation:bg 9s linear infinite}
+    background:url("ozadje.png") repeat;animation:bg 9s linear infinite}
   @keyframes bg{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(-66%,0,0)}100%{transform:translate3d(0,0,0)}}
   #gate{position:fixed;inset:0;z-index:100;background:#000;background-image:radial-gradient(#0f0 1px,transparent 1px);background-size:14px 14px;
     display:flex;flex-direction:column;align-items:center;justify-content:center}
@@ -32,8 +32,7 @@
   @keyframes wob{from{transform:rotate(-2deg) scale(1)}to{transform:rotate(2deg) scale(1.06)}}
   #bon{position:relative;z-index:3;display:block;width:min(70vw,360px);height:auto;margin:10px auto 0;
     animation:wob .6s ease-in-out infinite alternate}
-  .sp{position:absolute;z-index:2;pointer-events:none}
-  .sp.top{z-index:4}
+  .sp{position:absolute;z-index:1;pointer-events:none}
   .a0{animation:spin 3s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
   .a1{animation:bounce .7s ease-in-out infinite alternate}@keyframes bounce{to{transform:translateY(-28px)}}
   .a2{animation:wig .4s ease-in-out infinite alternate}@keyframes wig{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
@@ -42,6 +41,10 @@
   .a5{animation:blk 1s steps(2) infinite}@keyframes blk{50%{opacity:0}}
   #mute{position:fixed;right:8px;bottom:8px;z-index:50;border:3px outset #ccc;background:#c0c0c0;padding:4px 8px;cursor:pointer}
   #mute svg{width:24px;display:block}
+  @media(max-width:600px){
+    #gallery{padding:12px 6px}
+    .pic{max-width:52vw;padding:5px;box-shadow:4px 4px #000}
+  }
   @media(prefers-reduced-motion:reduce){*{animation-duration:0s!important}}
 </style>
 </head>
@@ -74,14 +77,11 @@ var SONGS = ["song.mp3"];
 // Photos: number of placeholder pics, OR replace entries with real paths like "img/party1.jpg".
 var PHOTOS = ["images/IMG_1169.jpg","images/IMG_1433.jpg","images/IMG_1779.jpg","images/IMG_2064.jpg","images/IMG_2065.jpg","images/IMG_2101.jpg","images/IMG_2241.jpg","images/IMG_2336.jpg","images/IMG_2384.jpg","images/IMG_2437.jpg","images/IMG_2616.jpg","images/IMG_2651.jpg","images/IMG_2724.jpg","images/IMG_2739.jpg","images/IMG_2752.jpg","images/IMG_2787.jpg","images/IMG_7008.JPG","images/unnamed.jpg","images/unnamed%20(1).jpg","images/unnamed%20(2).jpg"];
 // Local gifs sprinkled around the page.
-var GIFS = ["gifs/2DA64QPWVJBJT5TNSGUNJELCVQWN7OLM.gif","gifs/2RTHYOCOCMHBJPGMAYHG5CLVBKFSS46Y.gif","gifs/5BSPYIBL4HJOPBQRIVX5DP3WMFW4NVTG.gif","gifs/CFOLQCEES2HPJNSQKKZJC6DAWQFYU6R2.gif","gifs/D35D4VRCY5ADRH234MUXRQHCQ3E3VX55.gif","gifs/D5JQBEUUZQZJSQKUKOVXQISODMQD4SPX.gif","gifs/E7YYFZN6SM36LSUHYZZ5NJ2ITLUUUH72.gif","gifs/ERPFAGRKB6JXVPLAR6Y62CTOXC4HTUOI.gif","gifs/GAIF6EHCF2J7N7VUUQNOKZCCGF3ADHWB.gif","gifs/JJOKFUMX2ZGCAWWUR5VIIP4CQHPIVCTY.gif","gifs/RNHGVNLVCM4HGX5VJBX4CXCPDGBHZY6X.gif","gifs/VRTIQU3SDL4XMVJAR23ESZC27D6ILOYU.gif","gifs/W3X7KQPS3IZY6OAAKPDLO37ILKGFTC24.gif","gifs/Z7W54GX6S5XWIIUJOSXZM4HCDK46TP3T.gif"];
+var GIFS = ["gifs/2DA64QPWVJBJT5TNSGUNJELCVQWN7OLM.gif","gifs/2RTHYOCOCMHBJPGMAYHG5CLVBKFSS46Y.gif","gifs/5BSPYIBL4HJOPBQRIVX5DP3WMFW4NVTG.gif","gifs/CFOLQCEES2HPJNSQKKZJC6DAWQFYU6R2.gif","gifs/D35D4VRCY5ADRH234MUXRQHCQ3E3VX55.gif","gifs/D5JQBEUUZQZJSQKUKOVXQISODMQD4SPX.gif","gifs/E7YYFZN6SM36LSUHYZZ5NJ2ITLUUUH72.gif","gifs/ERPFAGRKB6JXVPLAR6Y62CTOXC4HTUOI.gif","gifs/GAIF6EHCF2J7N7VUUQNOKZCCGF3ADHWB.gif","gifs/JJOKFUMX2ZGCAWWUR5VIIP4CQHPIVCTY.gif","gifs/RNHGVNLVCM4HGX5VJBX4CXCPDGBHZY6X.gif","gifs/VRTIQU3SDL4XMVJAR23ESZC27D6ILOYU.gif","gifs/W3X7KQPS3IZY6OAAKPDLO37ILKGFTC24.gif","gifs/frends.gif","gifs/intertejnise.gif","gifs/kiss.gif","gifs/kvin.gif","gifs/kvin2.gif","gifs/newsflash.gif","gifs/secret%20to%20success.gif","gifs/srcki.gif","gifs/women%20sharing%20ideas.gif","gifs/xx.gif"];
 /* ==================== */
 
 var R=Math.random,rnd=function(a,b){return a+R()*(b-a)},pick=function(a){return a[Math.floor(R()*a.length)]};
 var hsl=function(){return "hsl("+Math.floor(rnd(0,360))+",100%,"+Math.floor(rnd(45,62))+"%)"};
-
-/* random rainbow background */
-document.getElementById("bg").style.backgroundImage="linear-gradient("+Math.floor(rnd(0,360))+"deg,"+[1,2,3,4,5,6].map(hsl).join(",")+")";
 
 /* placeholder photo: random shapes, no text */
 function ph(){
@@ -115,14 +115,14 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){
   e.target.style.animationPlayState=e.isIntersecting?"":"paused";
 })});
 function sprinkle(){
-  var site=document.getElementById("site"),h=site.scrollHeight,n=Math.min(60,Math.round(h/80)+10);
+  var site=document.getElementById("site"),h=site.scrollHeight,n=Math.min(160,Math.round(h/45)+30);
   for(var i=0;i<n;i++){
     var el=document.createElement("img");
     el.src=pick(GIFS);el.alt="";el.loading="lazy";el.decoding="async";
     el.style.width=Math.floor(rnd(40,140))+"px";el.style.height="auto";
     el.onerror=function(){this.remove()};
-    el.className="sp a"+Math.floor(rnd(0,6))+(R()<.25?" top":"");
-    el.style.left=rnd(-2,96)+"%";el.style.top=rnd(0,Math.max(0,h-60))+"px";
+    el.className="sp a"+Math.floor(rnd(0,6));
+    el.style.left=rnd(-2,96)+"%";el.style.top=rnd(0,100)+"%";
     el.style.animationDelay=(-rnd(0,5))+"s";el.style.animationDuration=rnd(.5,6)+"s";
     site.appendChild(el);io.observe(el);
   }
