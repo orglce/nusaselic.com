@@ -127,7 +127,7 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){
 })});
 function sprinkle(){
   var site=document.getElementById("site"),h=site.scrollHeight;
-  var cap=window.innerWidth<700?140:340,n=Math.min(cap,Math.round(h/22)+60);
+  var cap=window.innerWidth<700?260:600,n=Math.min(cap,Math.round(h/12)+110);
   var frag=document.createDocumentFragment();
   for(var i=0;i<n;i++){
     var el=document.createElement("img");
