@@ -1,1 +1,61 @@
-nekii
+<style>
+  body {
+    cursor:
+      url("./gifs/sparkle.png") 0 0,
+      auto;
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .trail {
+    position: fixed;
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
+    background: url("./gifs/sparkle.png") no-repeat center / contain;
+    pointer-events: none;
+    z-index: 9999;
+    animation: trail-fade 1s linear forwards;
+  }
+
+  @keyframes trail-fade {
+    from {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.2) rotate(90deg);
+    }
+  }
+</style>
+
+<div id="content">
+  <img src="gifs/kvin2.gif" alt="" />
+  <h2>nusa.selic99@gmail.com</h2>
+</div>
+
+<script>
+  (function () {
+    var last = 0;
+    document.addEventListener("mousemove", function (e) {
+      var now = Date.now();
+      if (now - last < 40) return;
+      last = now;
+
+      var el = document.createElement("div");
+      el.className = "trail";
+      el.style.left = e.clientX + "px";
+      el.style.top = e.clientY + "px";
+      document.body.appendChild(el);
+      setTimeout(function () {
+        el.remove();
+      }, 1000);
+    });
+  })();
+</script>
