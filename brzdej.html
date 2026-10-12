@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>★</title>
+<style>
+  html,body{margin:0;padding:0;width:100%;max-width:100%;overflow-x:hidden}
+  body{position:relative;background:#0a0018;
+    font-family:"Comic Sans MS","Comic Sans",cursive;text-align:center}
+  #bg{position:fixed;inset:0;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:hidden}
+  #bg::before{content:"";position:absolute;left:0;top:0;width:300%;height:100%;
+    background:url("ozadje.png") repeat;animation:bg 9s linear infinite}
+  #bg.paused::before{animation-play-state:paused}
+  @keyframes bg{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(-66%,0,0)}100%{transform:translate3d(0,0,0)}}
+  #gate{position:fixed;inset:0;z-index:100;background:#000;background-image:radial-gradient(#0f0 1px,transparent 1px);background-size:14px 14px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center}
+  #cat{width:min(70vw,320px);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;transition:transform .1s}
+  #cat.pet{transform:scale(1.1) rotate(-5deg)}
+  #bar{width:min(300px,80vw);height:22px;border:3px ridge #0f0;margin-top:16px;background:#020}
+  #fill{height:100%;width:0;background:repeating-linear-gradient(90deg,#0f0 0 10px,#8f8 10px 20px)}
+  .heart{position:fixed;pointer-events:none;z-index:101;width:30px;animation:up 1s forwards}
+  @keyframes up{to{transform:translateY(-90px);opacity:0}}
+  #site{display:none;position:relative;min-height:100vh;padding:30px 0 40px;overflow-x:clip}
+  #gallery{position:relative;z-index:3;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;max-width:900px;margin:0 auto;padding:20px}
+  .pic{position:relative;box-shadow:6px 6px #000;content-visibility:auto;contain-intrinsic-size:auto 260px;
+    animation:wobb 2.6s ease-in-out infinite alternate,bf .5s infinite}
+  .pic .star{position:absolute;width:22px;height:22px;pointer-events:none;z-index:2;transform:translate(-50%,-50%)}
+  @keyframes wobb{from{transform:rotate(var(--rot,0deg)) scale(1)}to{transform:rotate(calc(var(--rot,0deg) + 4deg)) scale(1.05)}}
+  @keyframes bf{0%,49.9%{border-color:var(--bc)}50%,100%{border-color:#fff}}
+  .pic img{display:block;width:100%;height:auto}
+  .poem{position:relative;z-index:3;max-width:640px;margin:40px auto 0;padding:24px 20px;
+    background:rgba(0,0,0,.55);border:4px dashed #ff0;border-radius:6px;
+    font-size:clamp(18px,3.4vw,28px);line-height:1.7;color:#0ff;
+    text-shadow:0 0 6px #f0f,2px 2px #f0f;transform:rotate(-1.5deg)}
+  .poem div::first-letter{float:left;font-size:2.3em;line-height:.85;padding:2px 6px 0 0;
+    color:#ff0;text-shadow:0 0 10px #f0f,3px 3px #f0f}
+  .poem .stanza{height:14px}
+  .final{position:relative;z-index:3;font-size:clamp(28px,7vw,64px);margin:60px 8px 30px;color:#fff;
+    text-shadow:0 0 8px #f0f,0 0 20px #0ff,3px 3px #f0f;animation:wob .6s infinite alternate}
+  @keyframes wob{from{transform:rotate(-2deg) scale(1)}to{transform:rotate(2deg) scale(1.06)}}
+  #bon{position:relative;z-index:3;display:block;width:min(70vw,360px);height:auto;margin:10px auto 0;
+    animation:wob .6s ease-in-out infinite alternate}
+  .sp{position:absolute;z-index:1;pointer-events:none}
+  .side{position:fixed;top:0;width:31px;height:100vh;overflow:hidden;pointer-events:none;z-index:2}
+  .side.left{left:0}
+  .side.right{right:0}
+  .side::before{content:"";position:absolute;top:0;left:0;width:100vh;height:31px;
+    background:url("gifs/srcki.gif") repeat-x;transform-origin:0 0;transform:translateX(31px) rotate(90deg)}
+  .a0{animation:spin 3s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+  .a1{animation:bounce .7s ease-in-out infinite alternate}@keyframes bounce{to{transform:translateY(-28px)}}
+  .a2{animation:wig .4s ease-in-out infinite alternate}@keyframes wig{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+  .a3{animation:pul .8s ease-in-out infinite alternate}@keyframes pul{to{transform:scale(1.5)}}
+  .a4{animation:fl 6s ease-in-out infinite alternate}@keyframes fl{to{transform:translate(40px,30px) rotate(25deg)}}
+  .a5{animation:blk 1s steps(2) infinite}@keyframes blk{50%{opacity:0}}
+  #mute{position:fixed;right:8px;bottom:8px;z-index:50;border:3px outset #ccc;background:#c0c0c0;padding:4px 8px;cursor:pointer}
+  #mute svg{width:24px;display:block}
+  @media(max-width:600px){
+    #gallery{padding:12px 6px}
+    .pic{max-width:52vw;box-shadow:4px 4px #000}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation-duration:0s!important}}
+</style>
+</head>
+<body>
+
+<div id="bg"></div>
+<div class="side left"></div>
+<div class="side right"></div>
+
+<div id="gate">
+  <img id="cat" src="images/cat.png" alt="cat" draggable="false">
+  <div id="bar"><div id="fill"></div></div>
+</div>
+
+<div id="site">
+    <div class="final">Vse najboljše legendaaaa!!</div>
+
+  <div id="gallery"></div>
+  <div class="poem"><div>Nuša naša je legenda,</div><div>Upam si trditi da ma vsaj dva frenda,</div><div>Šale jo razveselijo,</div><div>Od smeha sosedje kličejo policijo</div><div class="stanza"></div><div>Malico ima vedno s sabo</div><div>Aprišiejta zdravo hrano.</div><div>Malokrat se boji ljudi,</div><div>Od njih srka vse razen krvi.</div><div class="stanza"></div><div>Roke njene rade peseke božajo,</div><div>A še raje mucke crkljajo.</div><div>Dragi prijatelji jo vedno obkrožajo,</div><div>In z njo najraje proslavljajo.</div></div>
+  <img id="bon" src="bon.jpg" alt="">
+</div>
+
+<button id="mute" aria-label="music"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9z" fill="#000"/><path id="waves" d="M15 8q4 4 0 8M18 5q7 7 0 14" fill="none" stroke="#000" stroke-width="2"/></svg></button>
+<audio id="player" loop preload="auto" playsinline></audio>
+
+<script>
+/* ===== EDIT ME ===== */
+// Background music, loops for the whole visit.¸
+var SONGS = ["song.mp3"];
+// Photos: number of placeholder pics, OR replace entries with real paths like "img/party1.jpg".
+var PHOTOS = ["images/1000013338.jpg","images/1000013339.jpg","images/IMG_1169.jpg","images/IMG_1433.jpg","images/IMG_1779.jpg","images/IMG_2064.jpg","images/IMG_2065.jpg","images/IMG_2101.jpg","images/IMG_2241.jpg","images/IMG_2336.jpg","images/IMG_2384.jpg","images/IMG_2437.jpg","images/IMG_2616.jpg","images/IMG_2651.jpg","images/IMG_2724.jpg","images/IMG_2739.jpg","images/IMG_2752.jpg","images/IMG_2787.jpg","images/IMG_7008.JPG","images/P1013686_preview.jpeg","images/unnamed.jpg","images/unnamed%20(1).jpg","images/unnamed%20(2).jpg"];
+// Local gifs sprinkled around the page.
+var GIFS = ["gifs/2BEYLOANZFYNHFIMGTJWVJUW3UFRHRUI.gif","gifs/2DA64QPWVJBJT5TNSGUNJELCVQWN7OLM.gif","gifs/2RTHYOCOCMHBJPGMAYHG5CLVBKFSS46Y.gif","gifs/5APOFT7U7CYBSKE3W5RVS7T435VMWYH4.gif","gifs/5BSPYIBL4HJOPBQRIVX5DP3WMFW4NVTG.gif","gifs/5H6G7CD2PXQZ7F6B2A723OXDX2UEVKRI.gif","gifs/AEOZTCFVHQKAJJIJO572WKKCVAB63GVS.gif","gifs/CFOLQCEES2HPJNSQKKZJC6DAWQFYU6R2.gif","gifs/D5JQBEUUZQZJSQKUKOVXQISODMQD4SPX.gif","gifs/E7YYFZN6SM36LSUHYZZ5NJ2ITLUUUH72.gif","gifs/EIUKRTBLFLUIRMWG5TZVDGT7HEANPYWK.gif","gifs/ERPFAGRKB6JXVPLAR6Y62CTOXC4HTUOI.gif","gifs/GAIF6EHCF2J7N7VUUQNOKZCCGF3ADHWB.gif","gifs/RNHGVNLVCM4HGX5VJBX4CXCPDGBHZY6X.gif","gifs/VRTIQU3SDL4XMVJAR23ESZC27D6ILOYU.gif","gifs/W3X7KQPS3IZY6OAAKPDLO37ILKGFTC24.gif","gifs/XN3WA3R6FAIFY647HNLEFYDHPQ4Y6T2J.gif","gifs/frends.gif","gifs/intertejnise.gif","gifs/kiss.gif","gifs/kvin.gif","gifs/kvin2.gif","gifs/newsflash.gif","gifs/secret%20to%20success.gif","gifs/srcki.gif","gifs/women%20sharing%20ideas.gif","gifs/xx.gif"];
+/* ==================== */
+
+var DIMS={"images/1000013338.jpg":[1536,2048],"images/1000013339.jpg":[2048,1536],"images/IMG_1169.jpg":[1853,1390],"images/IMG_1433.jpg":[2419,1814],"images/IMG_1779.jpg":[2419,1814],"images/IMG_2064.jpg":[2419,1814],"images/IMG_2065.jpg":[2419,1814],"images/IMG_2101.jpg":[2419,1814],"images/IMG_2241.jpg":[1814,2419],"images/IMG_2336.jpg":[2419,1814],"images/IMG_2384.jpg":[2419,1814],"images/IMG_2437.jpg":[2419,1814],"images/IMG_2616.jpg":[2419,1814],"images/IMG_2651.jpg":[2419,1814],"images/IMG_2724.jpg":[2419,1814],"images/IMG_2739.jpg":[2419,1814],"images/IMG_2752.jpg":[2419,1814],"images/IMG_2787.jpg":[2419,1814],"images/IMG_7008.JPG":[2419,1814],"images/P1013686_preview.jpeg":[1920,1440],"images/unnamed.jpg":[1814,2419],"images/unnamed%20(1).jpg":[2075,3112],"images/unnamed%20(2).jpg":[2419,1814]};
+var R=Math.random,rnd=function(a,b){return a+R()*(b-a)},pick=function(a){return a[Math.floor(R()*a.length)]};
+var hsl=function(){return "hsl("+Math.floor(rnd(0,360))+",100%,"+Math.floor(rnd(45,62))+"%)"};
+
+/* placeholder photo: random shapes, no text */
+function ph(){
+  var s="<rect width='400' height='320' fill='"+hsl()+"'/>";
+  for(var i=0;i<7;i++){
+    var t=R();
+    s+= t<.4?"<circle cx='"+rnd(0,400)+"' cy='"+rnd(0,320)+"' r='"+rnd(20,90)+"' fill='"+hsl()+"'/>"
+      : t<.8?"<rect x='"+rnd(0,300)+"' y='"+rnd(0,240)+"' width='"+rnd(40,180)+"' height='"+rnd(40,140)+"' fill='"+hsl()+"'/>"
+      : "<polygon points='"+[0,1,2].map(function(){return rnd(0,400)+","+rnd(0,320)}).join(" ")+"' fill='"+hsl()+"'/>";
+  }
+  s+="<path d='M0 0L400 320M400 0L0 320' stroke='#fff' stroke-width='3' opacity='.5'/>";
+  return "data:image/svg+xml;utf8,"+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='400' height='320'>"+s+"</svg>");
+}
+
+/* gallery: random sizes, tilts, borders, offsets */
+PHOTOS.slice().sort(function(){return R()-.5}).forEach(function(p){
+  var real=typeof p==="string",d=document.createElement("div");d.className="pic";
+  d.style.width=Math.floor(rnd(130,330))+"px";
+  d.style.margin=Math.floor(rnd(-6,34))+"px "+Math.floor(rnd(0,34))+"px";
+  d.style.setProperty("--rot",rnd(-9,9).toFixed(1)+"deg");
+  var bc=hsl();d.style.setProperty("--bc",bc);
+  d.style.border=Math.floor(rnd(2,9))+"px "+pick(["outset","ridge","dashed","double","solid","groove"])+" "+bc;
+  d.style.animationDelay=(-rnd(0,3)).toFixed(2)+"s, "+(-rnd(0,2)).toFixed(2)+"s";
+  d.style.animationDuration=rnd(1.8,4).toFixed(2)+"s, "+rnd(.35,.8).toFixed(2)+"s";
+  var dims=real&&DIMS[p];
+  d.innerHTML="<img alt='' loading='lazy' decoding='async' "+(dims?"width='"+dims[0]+"' height='"+dims[1]+"' ":"")+"src='"+(real?p:ph())+"'>";
+  document.getElementById("gallery").appendChild(d);
+});
+function stars(d){
+  d.style.contentVisibility="visible";
+  var w=d.offsetWidth,h=d.offsetHeight,step=32,pos=[];
+  if(!w||!h)return;
+  for(var x=step/2;x<w;x+=step)pos.push([x,-8],[x,h+8]);
+  for(var y=step/2;y<h;y+=step)pos.push([-8,y],[w+8,y]);
+  pos.forEach(function(p,i){
+    var s=document.createElement("img");
+    s.className="star";s.src=(i%2)?"gifs/star.gif":"gifs/star1.gif";
+    s.style.left=p[0]+"px";s.style.top=p[1]+"px";
+    s.style.transform="translate(-50%,-50%) rotate("+Math.floor(rnd(-20,20))+"deg)";
+    s.alt="";s.loading="lazy";s.decoding="async";d.appendChild(s);
+  });
+}
+
+/* local gifs are ready immediately */
+var gifsReady=Promise.resolve();
+
+/* sprinkle gifs everywhere */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){
+  e.target.style.animationPlayState=e.isIntersecting?"":"paused";
+})});
+function sprinkle(){
+  var site=document.getElementById("site"),h=site.scrollHeight;
+  var cap=window.innerWidth<700?260:600,n=Math.min(cap,Math.round(h/12)+110);
+  var frag=document.createDocumentFragment();
+  for(var i=0;i<n;i++){
+    var el=document.createElement("img");
+    el.src=pick(GIFS);el.alt="";el.loading="lazy";el.decoding="async";
+    el.style.width=Math.floor(rnd(40,140))+"px";el.style.height="auto";
+    el.onerror=function(){this.remove()};
+    el.className="sp a"+Math.floor(rnd(0,6));
+    el.style.left=rnd(-2,90)+"%";el.style.top=rnd(0,100)+"%";
+    el.style.animationDelay=(-rnd(0,5))+"s";el.style.animationDuration=rnd(.5,6)+"s";
+    frag.appendChild(el);io.observe(el);
+  }
+  site.appendChild(frag);
+}
+
+/* cat petting */
+var cat=document.getElementById("cat"),fill=document.getElementById("fill");
+var pets=0,NEED=25,done=false,last=0,lx=0,ly=0;
+function pet(x,y){
+  if(done)return;var now=Date.now();if(now-last<80)return;last=now;pets++;
+  cat.setAttribute("class","pet");setTimeout(function(){cat.removeAttribute("class")},90);
+  var h=document.createElement("div");h.className="heart";
+  h.innerHTML="<svg viewBox='0 0 40 40'><path d='M20 35C-8 15 8 0 20 12C32 0 48 15 20 35z' fill='"+hsl()+"' stroke='#000' stroke-width='2'/></svg>";
+  h.style.left=(x-15)+"px";h.style.top=(y-15)+"px";document.body.appendChild(h);setTimeout(function(){h.remove()},1000);
+  fill.style.width=Math.min(100,pets/NEED*100)+"%";
+  if(pets>=NEED)enter();
+}
+cat.addEventListener("pointermove",function(e){if(Math.abs(e.clientX-lx)+Math.abs(e.clientY-ly)>12){lx=e.clientX;ly=e.clientY;pet(e.clientX,e.clientY)}});
+cat.addEventListener("pointerdown",function(e){pet(e.clientX,e.clientY)});
+
+var audio=document.getElementById("player"),musicOn=false;
+audio.src=SONGS[0];
+function startMusic(){
+  if(musicOn)return;musicOn=true;
+  audio.play().catch(function(){musicOn=false});
+}
+// kick off on the first touch/click so mobile autoplay rules are satisfied
+document.addEventListener("pointerdown",startMusic);
+document.addEventListener("touchstart",startMusic,{passive:true});
+document.addEventListener("click",startMusic);
+function enter(){
+  done=true;
+  document.getElementById("gate").style.display="none";
+  document.getElementById("site").style.display="block";
+  setTimeout(function(){document.querySelectorAll(".pic").forEach(function(d){if(R()<.45)stars(d)})},50);
+  startMusic();
+  Promise.race([gifsReady,new Promise(function(r){setTimeout(r,4000)})]).then(function(){
+    setTimeout(function(){
+      if(window.requestIdleCallback)requestIdleCallback(sprinkle,{timeout:2000});
+      else sprinkle();
+    },400);
+  });
+}
+
+/* pause the big animated background while scrolling so it doesn't fight the compositor */
+var bg=document.getElementById("bg"),bgT=null;
+window.addEventListener("scroll",function(){
+  if(!bg.classList.contains("paused"))bg.classList.add("paused");
+  clearTimeout(bgT);bgT=setTimeout(function(){bg.classList.remove("paused")},150);
+},{passive:true});
+document.getElementById("mute").onclick=function(e){
+  e.stopPropagation();
+  var w=document.getElementById("waves");
+  if(audio.paused){musicOn=true;audio.play().catch(function(){musicOn=false});w.style.display=""}
+  else{audio.pause();musicOn=false;w.style.display="none"}
+};
+</script>
+</body>
+</html>
